@@ -1,0 +1,38 @@
+{
+  "name": "surelys_variedades",
+  "version": "1.0.0",
+  "description": "eCommerce - todo shop, A Node.js Project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --watchAll --verbose",
+    "start": "index.js"
+  },
+  "engines": {
+    "node": "16.13.2"
+  },
+  "keywords": [
+    "shop",
+    "shopping",
+    "clothes",
+    "ecommerce"
+  ],
+  "author": "George Quezada - George Develops.",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.7",
+    "express": "^4.17.3",
+    "fawn": "^2.1.5",
+    "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.8",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.15",
+    "winston": "^3.6.0"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
+  }
+}

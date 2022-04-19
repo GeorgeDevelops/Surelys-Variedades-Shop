@@ -21,6 +21,7 @@ const cart = require('./routes/cart');
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(express.json());
+require('./middlewares/privatekey')();
 
 // Router 
 

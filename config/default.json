@@ -1,5 +1,6 @@
 {
     "defaultSettings": {
-        "privateKey": "IWB19O2002AMNIGLQR"
+        "privateKey": "IWB19O2002AMNIGLQR",
+        "db": "mongodb+srv://George:Ramiorez82!@surelys-variedades-db.alhic.mongodb.net/Surelys-Variedades-db?retryWrites=true&w=majority"
     }
 }

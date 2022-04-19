@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
+const config = require('config');
 
 // Routes 
 
@@ -32,7 +33,7 @@ app.use('/api', cart);
 
 // DB connection
 
-mongoose.connect('mongodb://localhost/SVS').then(()=>{
+mongoose.connect(`${config.get('defaultSettings.db')}`).then(()=>{
     logger.log({
         level: 'info',
         message: "Successfully connected to MongoDB..."

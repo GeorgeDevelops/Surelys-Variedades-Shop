@@ -36,7 +36,7 @@ app.use('/api', cart);
 mongoose.connect(`${config.get('defaultSettings.db')}`).then(()=>{
     logger.log({
         level: 'info',
-        message: "Successfully connected to MongoDB..."
+        message: `Successfully connected to ${config.get('defaultSettings.db')}...`
     });
 });
 

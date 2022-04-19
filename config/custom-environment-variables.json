@@ -1,5 +1,6 @@
 {
     "defaultSettings": {
-        "privateKey": ""
+        "privateKey": "SV_privateKey",
+        "db":"SV_db"
     }
 }

@@ -9,6 +9,12 @@ const logger = winston.createLogger({
         new winston.transports.Console({
             format: winston.format.simple()
         }),
+    ],
+    exceptionHandlers: [
+        new winston.transports.File({ filename: 'exceptions.log', 
+        format: winston.format.json(),
+        handleExceptions: true }),
+        new winston.transports.Console({ format: winston.format.simple() })
     ]
 });
 

@@ -7,6 +7,27 @@ const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
+const winston = require('winston');
+const emitterEvent = require('events');
+const emitter = new emitterEvent();
+
+// Uncaught && Unhandled emitters
+
+process.on('uncaughtException', (ex) => {
+    winston.error(ex.message, ex);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (ex) => {
+    winston.error(ex.message, ex);
+    process.exit(1);
+});
+
+// Connection emitter
+
+emitter.on('connection', () => {
+    return logger.info("New connection...")
+});
 
 // Routes 
 
@@ -21,7 +42,7 @@ const cart = require('./routes/cart');
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(express.json());
-require('./middlewares/privatekey')();
+require('./middlewares/essentialConfig')();
 
 // Router 
 
@@ -50,6 +71,4 @@ app.listen(port, () => {
     });
 });
 
-
-// 1. verify the queries validation on the routes is competent.
 module.exports.server = app;

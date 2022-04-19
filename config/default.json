@@ -1,6 +1,6 @@
 {
     "defaultSettings": {
-        "privateKey": "IWB19O2002AMNIGLQR",
+        "privateKey": "mySecureKey",
         "db": "mongodb://localhost/SV"
     }
 }

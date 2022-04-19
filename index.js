@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
-const Fawn = require('fawn');
 
 // Routes 
 

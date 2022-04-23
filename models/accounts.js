@@ -42,7 +42,7 @@ const account = new mongoose.Schema({
 });
 
 account.methods.generateJWT = function(){
-    const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('defaultSettings.privateKey'))
+    const token = jwt.sign({ _id: this._id, username: this.username, isAdmin: this.isAdmin }, config.get('defaultSettings.privateKey'))
     return token;
 }
 

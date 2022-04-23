@@ -36,6 +36,7 @@ const login = require('./routes/auth');
 const products = require('./routes/products');
 const orders = require('./routes/orders');
 const cart = require('./routes/cart');
+const users = require('./routes/users');
 
 // Middlewares
 
@@ -61,6 +62,7 @@ app.use('/api', login);
 app.use('/api', products);
 app.use('/api', orders);
 app.use('/api', cart);
+app.use('/api', users)
 
 // DB connection
 

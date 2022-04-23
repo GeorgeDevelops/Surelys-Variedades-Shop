@@ -10,6 +10,7 @@ const config = require('config');
 const winston = require('winston');
 const emitterEvent = require('events');
 const emitter = new emitterEvent();
+const cors = require('cors');
 
 // Uncaught && Unhandled emitters
 
@@ -43,6 +44,7 @@ const users = require('./routes/users');
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(express.json());
+app.use(cors());
 require('./middlewares/essentialConfig')();
 
 //CORS 

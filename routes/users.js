@@ -3,8 +3,9 @@ const router = express.Router();
 const { accountSchema } = require('./../models/accounts');
 const logger = require('./../middlewares/logger');
 const auth = require('./../middlewares/auth');
+const cors = require('cors');
 
-router.get('/users/:id', auth, async (req, res)=>{
+router.get('/users/:id', [cors(), auth], async (req, res)=>{
     const id = req.params.id;
     try {
         const user = await accountSchema.findById(id);

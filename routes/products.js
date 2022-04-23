@@ -61,7 +61,7 @@ router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req,
     }
 });
 
-router.get('/products/:id', auth, async (req, res) => {
+router.get('/products/:id', async (req, res) => {
     const id = req.params.id;
 
     try {

@@ -24,7 +24,10 @@ router.post('/signup', async (req, res) => {
         await newAccount.save();
 
         const token = newAccount.generateJWT();
-        return res.header('x-auth-token', token).status(200).send("Te has registrado exitosamente!")
+        return res
+        .header('x-auth-token', token)
+        .header('access-control-expose-headers', "x-auth-token")
+        .status(200).send("Te has registrado exitosamente!")
     }
     catch (ex) {
         logger.log({

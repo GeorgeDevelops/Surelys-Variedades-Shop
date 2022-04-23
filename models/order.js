@@ -14,6 +14,11 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
         maxlength: 12
+    },
+    status: {
+        type: String,
+        default: "Pending",
+        required: true
     }
 });
 

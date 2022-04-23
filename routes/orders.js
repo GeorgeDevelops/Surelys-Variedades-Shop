@@ -72,6 +72,33 @@ router.post('/orders/new', auth, async (req, res) => {
 }
 });
 
+router.put('/orders/update/:customerId/:orderId', async (req, res)=>{
+    try {
+        const { customerId, orderId } = req.params;
+        const status = req.body.status;
+
+        const order = await Order.findById(orderId);
+        if (!order || order === '') return res.status(404).send("No pudimos encontrar su pedido, ");
+        order.status = status;
+
+        const user = await accountSchema.findById(customerId);
+        if (!user || user === '') return res.status(404).send("Usuario no encontrado.");
+        const userOrder = user.orders.find(element => element._id === mongoose.Types.ObjectId(orderId));
+        userOrder.status = status;
+
+        await user.save();
+        await order.save();
+
+        res.status(200).send("Estado de pedido actualizado con exito.")
+    } catch (ex) {
+        logger.log({
+            level: 'error',
+            message: Date.now() + ': Something went wrong at /orders/update/:customerId/:orderId :' + ex
+        });
+        return res.status(500).send("Algo ha salido mal al cambiar estado de esta orden");
+    }
+});
+
 router.delete('/orders/delete/:customerId/:orderId', async(req, res) => {
 
     try {

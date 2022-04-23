@@ -18,7 +18,10 @@ router.post('/login', async (req, res) => {
         if (!validPassword) return res.status(404).send("Correo o contraseña incorrecto."); 
     
         const token = user.generateJWT();
-        return res.header('x-auth-token', token).status(200).send("Has iniciado sesión correctamente");
+        return res
+        .header('x-auth-token', token)
+        .header('access-control-expose-headers', "x-auth-token")
+        .status(200).send("Has iniciado sesión correctamente");
     
     } catch (ex) {
         logger.log({

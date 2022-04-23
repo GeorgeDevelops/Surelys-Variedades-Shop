@@ -37,6 +37,7 @@ router.get('/products', async (req, res) => {
 
 router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req, res) => {
     const sizes = [...req.body.sizes.split(',')];
+    const categories = [...req.body.categories.split(',')];
    try { 
        const product = new Product({
         name: req.body.name,
@@ -44,7 +45,7 @@ router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req,
         desc: req.body.desc,
         stock: Number(req.body.stock),
         sizes: sizes,
-        category: [req.body.category],
+        category: categories,
         images: [...req.files]
     });
     await product.save();

@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { accountSchema } = require('./../models/accounts');
 const logger = require('./../middlewares/logger');
+const auth = require('./../middlewares/auth');
 
-router.get('/users/:id', async (req, res)=>{
+router.get('/users/:id', auth, async (req, res)=>{
     const id = req.params.id;
     try {
         const user = await accountSchema.findById(id);
@@ -19,7 +20,7 @@ router.get('/users/:id', async (req, res)=>{
     }
 });
 
-router.delete('/users/delete/:id', async (req, res)=>{
+router.delete('/users/delete/:id', auth, async (req, res)=>{
     const id = req.params.id;
     try {
         await accountSchema.deleteOne({ _id: id});

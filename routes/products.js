@@ -45,7 +45,7 @@ router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req,
         stock: Number(req.body.stock),
         sizes: req.body.sizes,
         category: req.body.categories,
-        images: [...req.files]
+        images: req.files
     });
     await product.save();
     return res.status(200).send("Articulo publicado correctamente.");

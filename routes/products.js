@@ -40,9 +40,9 @@ router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req,
    try { 
        const product = new Product({
         name: req.body.name,
-        price: Number(req.body.price),
+        price: req.body.price,
         desc: req.body.desc,
-        stock: Number(req.body.stock),
+        stock: req.body.stock,
         sizes: req.body.sizes,
         category: req.body.categories,
         images: req.files

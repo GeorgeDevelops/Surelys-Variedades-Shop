@@ -52,10 +52,9 @@ router.post('/orders/new', auth, async (req, res) => {
         product: product,
         phone: req.body.phone
     });
-    // customer.orders.push(order);
     await accountSchema.updateOne({ _id: customerId}, {$push: {orders: order }});
     product.forEach(async item => {
-        const p = await Product.findById(item.productId);
+        const p = await Product.findById(item.product._id);
         p.stock = p.stock - item.amount;
         await p.save();
     });
@@ -72,7 +71,7 @@ router.post('/orders/new', auth, async (req, res) => {
 }
 });
 
-router.put('/orders/update/:customerId/:orderId', async (req, res)=>{
+router.put('/orders/update/:customerId/:orderId', [auth, admin], async (req, res)=>{
     try {
         const { customerId, orderId } = req.params;
         const status = req.body.status;
@@ -99,7 +98,7 @@ router.put('/orders/update/:customerId/:orderId', async (req, res)=>{
     }
 });
 
-router.delete('/orders/delete/:customerId/:orderId', async(req, res) => {
+router.delete('/orders/delete/:customerId/:orderId', [auth, admin], async(req, res) => {
 
     try {
         const idOrder = req.params.orderId;

@@ -6,21 +6,9 @@ const Product =  require('./../models/product');
 const logger = require('./../middlewares/logger');
 const admin = require('./../middlewares/admin');
 const auth = require('./../middlewares/auth');
+const fs = require('fs');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-     const name = file.originalname.split('.')[0];
-     const format = file.originalname.split('.')[1];
-     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 999)
-
-      cb(null, uniqueSuffix + name + '.' + format)
-    }
-});
-
-const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' });
 
 router.get('/products', async (req, res) => {
     try {
@@ -43,6 +31,17 @@ router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req,
     });
     
    try { 
+    var count = 3;
+
+    for(let i = 0; i < count; i++){
+    var tmp_path = req.files[i].path;
+    var target_path = 'uploads/' + req.files[i].originalname;
+
+    var src = fs.createReadStream(tmp_path);
+    var dest = fs.createWriteStream(target_path);
+    src.pipe(dest);
+    }
+
        const product = new Product({
         name: req.body.name,
         price: Number(req.body.price),

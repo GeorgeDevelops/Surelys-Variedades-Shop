@@ -80,12 +80,12 @@ router.put('/orders/update/:customerId/:orderId', [auth, admin], async (req, res
         if (!order || order === '') return res.status(404).send("No pudimos encontrar su pedido, ");
         order.status = status;
 
-        const user = await accountSchema.findById(customerId);
-        if (!user || user === '') return res.status(404).send("Usuario no encontrado.");
-        const userOrder = user.orders.find(element => element._id === mongoose.Types.ObjectId(orderId));
-        userOrder.status = status;
+        await accountSchema.updateOne({ _id: customerId}, 
+            {$pull: { 'orders': { _id: mongoose.Types.ObjectId(orderId) } } });
 
-        await user.save();
+            await accountSchema.updateOne({ _id: customerId}, 
+                {$push: { 'orders': order } } );
+
         await order.save();
 
         res.status(200).send("Estado de pedido actualizado con exito.")
@@ -108,11 +108,6 @@ router.delete('/orders/delete/:customerId/:orderId', [auth, admin], async(req, r
 
         await accountSchema.updateOne({ _id: req.params.customerId}, 
             { $pull: { 'orders': { _id: mongoose.Types.ObjectId(idOrder) }}});
-
-        // const customer = await accountSchema.findOne({ _id: req.params.customerId});
-        // const orders = customer.orders.filter(order => order._id.toHexString() !== idOrder);
-        // customer.orders = orders;
-        // await customer.save();
 
     return res.status(200).send("Orden eliminada con exito.");
     } catch(ex){

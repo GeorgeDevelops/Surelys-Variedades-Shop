@@ -41,16 +41,13 @@ router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req,
     Object.keys(body).forEach(key => {
         if(!body[key] || body[key] === '') return res.status(400).send(`Algo anda mal ${key} is required.`);
     });
-
-    if (isNaN(body.price)) return res.status(400).send(`Algo anda mal price must be number.`);
-    if (isNaN(body.stock)) return res.status(400).send(`Algo anda mal price must be number.`);
     
    try { 
        const product = new Product({
         name: req.body.name,
-        price: req.body.price,
+        price: Number(req.body.price),
         desc: req.body.desc,
-        stock: req.body.stock,
+        stock: Number(req.body.stock),
         sizes: req.body.sizes,
         category: req.body.categories,
         images: req.files

@@ -19,6 +19,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: "Pendiente",
         required: true
+    }, 
+    date: {
+        type: String,
+        default: new Date().toLocaleDateString('es-ES')
     }
 });
 

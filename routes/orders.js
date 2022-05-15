@@ -61,7 +61,10 @@ router.post('/orders/new', auth, async (req, res) => {
     await order.save();
     customer.cart.splice(0, customer.cart.length);
     await customer.save();
-    return res.status(200).send("Pedido enviado con éxito!");
+    return res.status(200).send({
+        message: "Pedido enviado con éxito!",
+        id: orderId
+    });
  } catch (ex){
     logger.log({
         level: 'error',

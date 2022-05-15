@@ -63,7 +63,7 @@ app.use('/api', login);
 app.use('/api', products);
 app.use('/api', orders);
 app.use('/api', cart);
-app.use('/api', users)
+app.use('/api', users);
 
 // DB connection
 

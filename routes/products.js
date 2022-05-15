@@ -1,14 +1,10 @@
 
 const express = require('express');
-const multer = require('multer');
 const router = express.Router();
 const Product =  require('./../models/product');
 const logger = require('./../middlewares/logger');
 const admin = require('./../middlewares/admin');
 const auth = require('./../middlewares/auth');
-const fs = require('fs');
-
-const upload = multer({ dest: 'uploads/' });
 
 router.get('/products', async (req, res) => {
     try {
@@ -23,25 +19,23 @@ router.get('/products', async (req, res) => {
     }
 });
 
-router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req, res) => {
+router.post('/products/new', [auth, admin], async (req, res) => {
 
     const { body } = req;
-    Object.keys(body).forEach(key => {
-        if(!body[key] || body[key] === '') return res.status(400).send(`Algo anda mal ${key} is required.`);
-    });
+    // Object.keys(body).forEach(key => {
+    //     if(!body[key] || body[key] === '') return res.status(400).send(`Algo anda mal ${key} is required.`);
+    // });
+    const keys = Object.keys(body);
+
+    if (keys.length < 1) return res.status(400).send(`Llenar el formulario es obligatorio.`);
+    if (!body.images || body.images === '' || body.images === null) return res.status(400).send(`Seleccionar al menos una imagen es obligatorio.`);
+    if (!body.name || body.name === '' || body.name === null) return res.status(400).send(`Nombre es obligatorio.`);
+    if (!body.price || body.price === '' || body.price === null) return res.status(400).send(`Precio es obligatorio.`);
+    if (!body.stock || body.stock === '' || body.stock === null) return res.status(400).send(`Stock es obligatorio.`);
+    if (!body.categories || body.categories === '' || body.categories === null) return res.status(400).send(`Categorias es obligatorio.`);
+    if (!body.desc || body.desc === '' || body.desc === null) return res.status(400).send(`Descripcion es obligatorio.`);
     
    try { 
-    var count = 3;
-
-    for(let i = 0; i < count; i++){
-    var tmp_path = req.files[i].path;
-    var target_path = 'uploads/' + req.files[i].originalname;
-
-    var src = fs.createReadStream(tmp_path);
-    var dest = fs.createWriteStream(target_path);
-    src.pipe(dest);
-    }
-
        const product = new Product({
         name: req.body.name,
         price: Number(req.body.price),
@@ -49,11 +43,11 @@ router.post('/products/new', [auth, admin], upload.array('imgs', 3), async (req,
         stock: Number(req.body.stock),
         sizes: req.body.sizes,
         category: req.body.categories,
-        images: req.files
+        images: req.body.images
     });
+
     await product.save();
     return res.status(200).send("Articulo publicado correctamente.");
-
     } catch(ex){
         logger.log({
             level: 'error',

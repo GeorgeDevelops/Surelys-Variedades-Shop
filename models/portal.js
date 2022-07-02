@@ -2,11 +2,11 @@
 const mongoose = require('mongoose');
 
 const portalSchema = new mongoose.Schema({
-    images: {
-        type: Array,
+    image: {
+        type: Object,
         required: true
     },
-    postedDate: { type: Date, default: Date.now }
+    postedDate: { type: String, default: new Date().toLocaleDateString('es-ES') }
 });
 
 const Product = mongoose.model('portal', portalSchema);

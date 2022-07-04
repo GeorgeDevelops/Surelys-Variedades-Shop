@@ -28,7 +28,7 @@ router.post('/slider/post/image', [auth, admin], async (req, res) => {
     }
 });
 
-router.get('/slider/get/images', [auth, admin], async (req, res) => {
+router.get('/slider/get/images', async (req, res) => {
     try {
         const portalPhotos = await Portal.find();
         return res.status(200).send(portalPhotos);
